@@ -3,10 +3,19 @@
 
 
 def finder(files, queries):
-    """
-    YOUR CODE HERE
-    """
-    # Your code here
+    result = []
+    query_cache = {}
+
+    for query in queries:
+        if query not in query_cache:
+            query_cache[query] = 0
+        query_cache[query] += 1
+
+    for file in files:
+        file_query = file.split("/")[-1]
+        if file_query not in query_cache:
+            continue
+        result.append(file)
 
     return result
 
