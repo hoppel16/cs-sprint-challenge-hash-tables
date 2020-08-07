@@ -1,10 +1,18 @@
 def get_indices_of_item_weights(weights, length, limit):
-    for ind1 in range(0, length):
-        if ind1 + 1 >= length:
-            break
-        for ind2 in range(ind1+1, length):
-            if weights[ind1] + weights[ind2] is limit:
-                return ind2, ind1
+    weight_cache = {}
+
+    for index, weight in enumerate(weights):
+        weight_cache[weight] = index
+
+    for first_weight_index in range(0, length):
+        weight = weights[first_weight_index]
+
+        if limit - weight in weight_cache:
+            second_weight_index = weight_cache[limit - weight]
+            if first_weight_index is second_weight_index:
+                continue
+            result = [first_weight_index, second_weight_index]
+            return sorted(result, reverse=True)
 
     return None
 
